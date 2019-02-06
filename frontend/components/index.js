@@ -24,7 +24,12 @@ class Container extends Component {
     return(
       <div className="parent-container">
         {products.map(product => {
-          return <span key={product.id}>{product.title}</span>
+          return (
+            <div key={product.id}> 
+              <span key={product.id}>{product.title}</span>
+              <img src={product.photoUrl}></img>
+            </div>
+          )
         })}
       </div>
     );

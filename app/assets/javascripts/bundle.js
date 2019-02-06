@@ -252,9 +252,13 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "parent-container"
       }, products.map(function (product) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: product.id
-        }, product.title);
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          key: product.id
+        }, product.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: product.photoUrl
+        }));
       }));
     }
   }]);
