@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Container from './components';
+require("regenerator-runtime");
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
-  ReactDOM.render(<h1>Hello Batman</h1>, root);
+  ReactDOM.render(<Container />, root);
 });
