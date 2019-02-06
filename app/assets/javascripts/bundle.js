@@ -250,8 +250,12 @@ function (_Component) {
     value: function render() {
       var products = this.state.products;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "comp-container"
-      });
+        className: "parent-container"
+      }, products.map(function (product) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          key: product.id
+        }, product.title);
+      }));
     }
   }]);
 

@@ -22,7 +22,10 @@ class Container extends Component {
   render() {
     const { products } = this.state;
     return(
-      <div className="comp-container">
+      <div className="parent-container">
+        {products.map(product => {
+          return <span key={product.id}>{product.title}</span>
+        })}
       </div>
     );
   }
