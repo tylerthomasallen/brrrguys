@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getProducts } from '../api';
+import NavBar from './navbar';
 
 class Container extends Component {
   constructor(props) {
@@ -13,19 +14,18 @@ class Container extends Component {
     let { products } = this.state;
     if (products.length <= 0) {
       products = await getProducts();
-      debugger;
       await this.setState({products})
     }
-    debugger;
   }
 
   render() {
     const { products } = this.state;
     return(
       <div className="parent-container">
+        <NavBar />
         {products.map(product => {
           return (
-            <div key={product.id}> 
+            <div key={product.id} className="product-container"> 
               <span key={product.id}>{product.title}</span>
               <img src={product.photoUrl}></img>
             </div>

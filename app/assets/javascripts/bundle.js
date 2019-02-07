@@ -122,20 +122,19 @@ function () {
 
           case 6:
             productsJSON = _context.sent;
-            debugger;
             return _context.abrupt("return", productsJSON.products);
 
-          case 11:
-            _context.prev = 11;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 14:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 11]]);
+    }, _callee, this, [[0, 10]]);
   }));
 
   return function getProducts() {
@@ -157,6 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api */ "./frontend/api/index.js");
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -178,6 +178,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -213,7 +214,7 @@ function (_Component) {
                 products = this.state.products;
 
                 if (!(products.length <= 0)) {
-                  _context.next = 8;
+                  _context.next = 7;
                   break;
                 }
 
@@ -222,16 +223,12 @@ function (_Component) {
 
               case 4:
                 products = _context.sent;
-                debugger;
-                _context.next = 8;
+                _context.next = 7;
                 return this.setState({
                   products: products
                 });
 
-              case 8:
-                debugger;
-
-              case 9:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -251,9 +248,10 @@ function (_Component) {
       var products = this.state.products;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "parent-container"
-      }, products.map(function (product) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"], null), products.map(function (product) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: product.id
+          key: product.id,
+          className: "product-container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           key: product.id
         }, product.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -267,6 +265,37 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Container);
+
+/***/ }),
+
+/***/ "./frontend/components/navbar/index.js":
+/*!*********************************************!*\
+  !*** ./frontend/components/navbar/index.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var NavBar = function NavBar(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "navbar-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-home shopping-cart-container"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "shopping-cart-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-shopping-cart"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "cart-count"
+  }, "1")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
 /***/ }),
 
