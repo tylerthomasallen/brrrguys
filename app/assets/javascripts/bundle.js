@@ -90,12 +90,13 @@
 /*!*******************************!*\
   !*** ./frontend/api/index.js ***!
   \*******************************/
-/*! exports provided: getProducts */
+/*! exports provided: getProducts, getCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getProducts", function() { return getProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCart", function() { return getCart; });
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -117,30 +118,71 @@ function () {
 
           case 3:
             products = _context.sent;
-            debugger;
-            _context.next = 7;
+            _context.next = 6;
             return products.json();
 
-          case 7:
+          case 6:
             productsJSON = _context.sent;
-            debugger;
             return _context.abrupt("return", productsJSON.products);
 
-          case 12:
-            _context.prev = 12;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 15:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 12]]);
+    }, _callee, this, [[0, 10]]);
   }));
 
   return function getProducts() {
     return _ref.apply(this, arguments);
+  };
+}();
+var getCart =
+/*#__PURE__*/
+function () {
+  var _ref2 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee2() {
+    var cart, cartJSON;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return fetch("/api/carts");
+
+          case 3:
+            cart = _context2.sent;
+            debugger;
+            _context2.next = 7;
+            return cart.json();
+
+          case 7:
+            cartJSON = _context2.sent;
+            debugger;
+            return _context2.abrupt("return", cartJSON.cart);
+
+          case 12:
+            _context2.prev = 12;
+            _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
+
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this, [[0, 12]]);
+  }));
+
+  return function getCart() {
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -199,7 +241,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Container).call(this, props));
     _this.state = {
-      products: []
+      products: [],
+      cart: {},
+      loading: true
     };
     return _this;
   }
@@ -210,12 +254,13 @@ function (_Component) {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var products;
+        var _this$state, products, cart;
+
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                products = this.state.products;
+                _this$state = this.state, products = _this$state.products, cart = _this$state.cart;
 
                 if (!(products.length <= 0)) {
                   _context.next = 7;
@@ -233,6 +278,28 @@ function (_Component) {
                 });
 
               case 7:
+                if (!(cart.count === undefined)) {
+                  _context.next = 13;
+                  break;
+                }
+
+                _context.next = 10;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_1__["getCart"])();
+
+              case 10:
+                cart = _context.sent;
+                _context.next = 13;
+                return this.setState({
+                  cart: cart
+                });
+
+              case 13:
+                _context.next = 15;
+                return this.setState({
+                  loading: false
+                });
+
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -249,17 +316,24 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var products = this.state.products;
+      var _this2 = this;
+
+      var _this$state2 = this.state,
+          products = _this$state2.products,
+          cart = _this$state2.cart;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "parent-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        cart: cart
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "product-container"
       }, products.map(function (product) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: product.id,
           title: product.title,
           imgUrl: product.photoUrl,
-          price: product.price
+          price: product.price,
+          onClick: _this2.openModal
         });
       })));
     }
@@ -285,7 +359,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-var NavBar = function NavBar(props) {
+var NavBar = function NavBar(_ref) {
+  var cart = _ref.cart;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "navbar-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -296,7 +371,7 @@ var NavBar = function NavBar(props) {
     className: "fas fa-shopping-cart"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "cart-count"
-  }, "1")));
+  }, cart.count)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);

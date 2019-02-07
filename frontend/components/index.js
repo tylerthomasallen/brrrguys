@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProducts } from '../api';
+import { getProducts, getCart } from '../api';
 import NavBar from './navbar';
 import Product from './product';
 
@@ -7,26 +7,37 @@ class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      cart: {},
+      loading: true
     }
   }
 
   async componentDidMount() {
-    let { products } = this.state;
+    let { products, cart } = this.state;
+
     if (products.length <= 0) {
       products = await getProducts();
       await this.setState({products})
     }
+
+    if (cart.count === undefined) {
+      cart = await getCart();
+      await this.setState({cart})
+    }
+
+    await this.setState({loading: false})
   }
 
   render() {
-    const { products } = this.state;
+    const { products, cart } = this.state;
     return(
       <div className="parent-container">
-        <NavBar />
+        <NavBar cart={cart}/>
+       
         <div className="product-container"> 
           {products.map(product => {
-            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price}/>
+            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} onClick={this.openModal}/>
           })}
         </div>
       </div>
