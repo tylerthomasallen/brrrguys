@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Container from './components';
+import Root from './components/root';
 require("regenerator-runtime");
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
-  ReactDOM.render(<Container />, root);
+  ReactDOM.render(<Root />, root);
 });

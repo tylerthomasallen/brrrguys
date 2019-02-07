@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { getProducts, getCart } from '../api';
-import NavBar from './navbar';
-import Product from './product';
+import { getProducts, getCart, addProductAndReturnCart } from '../../api';
+import NavBar from '../navbar';
+import Product from '../product';
 
-class Container extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +11,8 @@ class Container extends Component {
       cart: {},
       loading: true
     }
+
+    this.addToCart = this.addToCart.bind(this);
   }
 
   async componentDidMount() {
@@ -29,15 +31,23 @@ class Container extends Component {
     await this.setState({loading: false})
   }
 
+  async addToCart(id) {
+    let { cart } = this.state;
+    let product = {id, cart_id: cart.id};
+    debugger;
+    cart = await addProductAndReturnCart(product);
+    await this.setState({cart});
+  }
+
   render() {
-    const { products, cart } = this.state;
+    const { products } = this.state;
     return(
       <div className="parent-container">
-        <NavBar cart={cart}/>
+        <NavBar count={products.length}/>
        
         <div className="product-container"> 
           {products.map(product => {
-            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} onClick={this.openModal}/>
+            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} addToCart={this.addToCart} productId={product.id}/>
           })}
         </div>
       </div>
@@ -45,4 +55,4 @@ class Container extends Component {
   }
 }
 
-export default Container;
+export default HomePage;

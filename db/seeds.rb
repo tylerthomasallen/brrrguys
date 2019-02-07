@@ -17,3 +17,6 @@ while i <= 9
     product.photo.attach(io: File.open("app/assets/images/beer/p#{i}.jpg"), filename: "beerphoto#{i}")
     i += 1
 end
+
+Cart.destroy_all
+Cart.create
