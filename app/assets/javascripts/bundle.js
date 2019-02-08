@@ -90,7 +90,7 @@
 /*!***********************************!*\
   !*** ./frontend/actions/index.js ***!
   \***********************************/
-/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart */
+/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart, addToCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101,6 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCart", function() { return receiveCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveProducts", function() { return retrieveProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveCart", function() { return retrieveCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToCart", function() { return addToCart; });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./frontend/api/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -138,10 +139,9 @@ var retrieveProducts = function retrieveProducts() {
 
               case 2:
                 products = _context.sent;
-                debugger;
                 return _context.abrupt("return", dispatch(receiveProducts(products)));
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -188,6 +188,39 @@ var retrieveCart = function retrieveCart() {
     }()
   );
 };
+var addToCart = function addToCart(productId, cartId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref3 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(dispatch) {
+        var cart;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["addProductAndReturnCart"])(productId, cartId);
+
+              case 2:
+                cart = _context3.sent;
+                return _context3.abrupt("return", dispatch(receiveCart(cart)));
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function (_x3) {
+        return _ref3.apply(this, arguments);
+      };
+    }()
+  );
+};
 
 /***/ }),
 
@@ -229,20 +262,19 @@ function () {
 
           case 6:
             productsJSON = _context.sent;
-            debugger;
             return _context.abrupt("return", productsJSON.products);
 
-          case 11:
-            _context.prev = 11;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 14:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 11]]);
+    }, _callee, this, [[0, 10]]);
   }));
 
   return function getProducts() {
@@ -266,26 +298,24 @@ function () {
 
           case 3:
             cart = _context2.sent;
-            debugger;
-            _context2.next = 7;
+            _context2.next = 6;
             return cart.json();
 
-          case 7:
+          case 6:
             cartJSON = _context2.sent;
-            debugger;
             return _context2.abrupt("return", cartJSON.cart);
 
-          case 12:
-            _context2.prev = 12;
+          case 10:
+            _context2.prev = 10;
             _context2.t0 = _context2["catch"](0);
             console.log(_context2.t0);
 
-          case 15:
+          case 13:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[0, 12]]);
+    }, _callee2, this, [[0, 10]]);
   }));
 
   return function getCart() {
@@ -297,97 +327,52 @@ var addProductAndReturnCart =
 function () {
   var _ref3 = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee3(product) {
-    var cart, newcart, cartJSON;
+  regeneratorRuntime.mark(function _callee3(productId, cartId) {
+    var newcart, cartJSON;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            cart = {
-              cart_id: product.cart_id
-            };
-            debugger;
-            _context3.prev = 2;
-            _context3.next = 5;
-            return fetch("/api/products/".concat(product.id), {
+            _context3.prev = 0;
+            _context3.next = 3;
+            return fetch("/api/products/".concat(productId), {
               method: "PUT",
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(cart)
+              body: JSON.stringify({
+                cart: {
+                  cart_id: cartId
+                }
+              })
             });
 
-          case 5:
+          case 3:
             newcart = _context3.sent;
-            debugger;
-            _context3.next = 9;
+            _context3.next = 6;
             return newcart.json();
 
-          case 9:
+          case 6:
             cartJSON = _context3.sent;
-            debugger;
             return _context3.abrupt("return", cartJSON.cart);
 
-          case 14:
-            _context3.prev = 14;
-            _context3.t0 = _context3["catch"](2);
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](0);
             console.log(_context3.t0);
 
-          case 17:
+          case 13:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, this, [[2, 14]]);
+    }, _callee3, this, [[0, 10]]);
   }));
 
-  return function addProductAndReturnCart(_x) {
+  return function addProductAndReturnCart(_x, _x2) {
     return _ref3.apply(this, arguments);
   };
 }();
-
-/***/ }),
-
-/***/ "./frontend/components/app.js":
-/*!************************************!*\
-  !*** ./frontend/components/app.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./homepage */ "./frontend/components/homepage/index.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/index.js");
-/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cart */ "./frontend/components/cart/index.js");
-
-
-
-
-
-
-var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "app-body"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    count: 0
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
-    path: "/cart",
-    component: _cart__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
-    path: "/",
-    component: _homepage__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-    to: "/"
-  })));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (App);
 
 /***/ }),
 
@@ -466,36 +451,36 @@ function (_Component) {
 
   _createClass(HomePage, [{
     key: "componentDidMount",
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     products: [],
-    //     loading: true
-    //   }
-    //   this.addToCart = this.addToCart.bind(this);
-    // }
     value: function () {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var _this$props, products, retrieveProducts;
+        var _this$props, products, retrieveProducts, cart, retrieveCart;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this$props = this.props, products = _this$props.products, retrieveProducts = _this$props.retrieveProducts;
+                _this$props = this.props, products = _this$props.products, retrieveProducts = _this$props.retrieveProducts, cart = _this$props.cart, retrieveCart = _this$props.retrieveCart;
 
                 if (!(products.length <= 0)) {
-                  _context.next = 5;
+                  _context.next = 4;
                   break;
                 }
 
-                debugger;
-                _context.next = 5;
+                _context.next = 4;
                 return retrieveProducts();
 
-              case 5:
+              case 4:
+                if (!(cart.id === undefined)) {
+                  _context.next = 7;
+                  break;
+                }
+
+                _context.next = 7;
+                return retrieveCart();
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -533,9 +518,11 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var products = _ref.products;
+  var products = _ref.products,
+      cart = _ref.cart;
   return {
-    products: products
+    products: products,
+    cart: cart
   };
 };
 
@@ -543,6 +530,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     retrieveProducts: function retrieveProducts() {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_1__["retrieveProducts"])());
+    },
+    retrieveCart: function retrieveCart() {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_1__["retrieveCart"])());
     }
   };
 };
@@ -563,6 +553,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 
 
 
@@ -584,7 +576,18 @@ var NavBar = function NavBar(_ref) {
   }, count)));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (NavBar);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var cart = _ref2.cart;
+  return {
+    count: cart.products.length
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {};
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(NavBar));
 
 /***/ }),
 
@@ -599,6 +602,10 @@ var NavBar = function NavBar(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+
+
 
 
 var Product = function Product(_ref) {
@@ -606,7 +613,8 @@ var Product = function Product(_ref) {
       imgUrl = _ref.imgUrl,
       price = _ref.price,
       addToCart = _ref.addToCart,
-      productId = _ref.productId;
+      productId = _ref.productId,
+      cartId = _ref.cartId;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "product-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -620,12 +628,27 @@ var Product = function Product(_ref) {
   }, "$", price, " /ea "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "price add",
     onClick: function onClick() {
-      return addToCart(productId);
+      return addToCart(productId, cartId);
     }
   }, "Add")));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Product);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var cart = _ref2.cart;
+  return {
+    cartId: cart.id
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addToCart: function addToCart(productId, cartId) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["addToCart"])(productId, cartId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Product));
 
 /***/ }),
 
@@ -642,7 +665,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./frontend/components/app.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router */ "./frontend/components/router.js");
 
 
 
@@ -652,10 +675,53 @@ var Root = function Root(_ref) {
   var store = _ref.store;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
     store: store
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Root);
+
+/***/ }),
+
+/***/ "./frontend/components/router.js":
+/*!***************************************!*\
+  !*** ./frontend/components/router.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./homepage */ "./frontend/components/homepage/index.js");
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/index.js");
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cart */ "./frontend/components/cart/index.js");
+
+
+
+
+
+
+var Router = function Router() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "app-body"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    count: 0
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/cart",
+    component: _cart__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/",
+    component: _homepage__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+    to: "/"
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Router);
 
 /***/ }),
 
@@ -701,13 +767,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 var cartReducer = function cartReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    products: []
+  };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    // case RECEIVE_PRODUCTS:
-    //     return {...state, products: action.payload }
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CART"]:
+      return _objectSpread({}, state, action.payload);
+
     default:
       return state;
   }

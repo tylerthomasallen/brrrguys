@@ -15,13 +15,11 @@ class Api::ProductsController < ApplicationController
     
     @product = Product.find(params[:id])
     @cart = Cart.find(cart_params[:cart_id])
-    new_count = @cart.count + 1
+    debugger
 
 
     if @product.update(cart_params)
-      unless @cart.products.include?(@product)
-        @cart.update_column(:count, new_count)
-      end
+      debugger
       render "api/carts/index"
     else
       render json: @product.errors.full_messages, status: 404
@@ -29,7 +27,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def cart_params
-    params.require(:product).permit(:cart_id)
+    params.require(:cart).permit(:cart_id)
   end
 
 end

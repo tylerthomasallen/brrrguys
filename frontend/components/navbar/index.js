@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const NavBar = ({count}) => {
     return(
@@ -15,4 +16,18 @@ const NavBar = ({count}) => {
     )
 }
 
-export default NavBar;
+const mapStateToProps = ({ cart }) => {
+    return {
+        count: cart.products.length
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NavBar);

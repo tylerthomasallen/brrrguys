@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
-import { retrieveProducts } from '../../actions'
+import { retrieveProducts, retrieveCart } from '../../actions'
 import Product from '../product';
 import { connect } from 'react-redux';
 
 class HomePage extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     products: [],
-  //     loading: true
-  //   }
-
-  //   this.addToCart = this.addToCart.bind(this);
-  // }
 
   async componentDidMount() {
-    const { products, retrieveProducts } = this.props;
+    const { products, retrieveProducts, cart, retrieveCart } = this.props;
     if (products.length <= 0) {
-      debugger;
       await retrieveProducts()
+    }
+
+    if (cart.id === undefined) {
+      await retrieveCart();
     }
   }
 
@@ -36,15 +30,17 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({products, cart}) => {
   return {
-    products
+    products,
+    cart
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    retrieveProducts: () => dispatch(retrieveProducts())
+    retrieveProducts: () => dispatch(retrieveProducts()),
+    retrieveCart: () => dispatch(retrieveCart())
   };
 };
 

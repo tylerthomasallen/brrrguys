@@ -2,7 +2,6 @@ export const getProducts = async () => {
   try {
     let products = await fetch(`/api/products`);
     let productsJSON = await products.json();
-    debugger;
     return productsJSON.products;
   } catch(error) {
     console.log(error);
@@ -12,27 +11,21 @@ export const getProducts = async () => {
 export const getCart = async () => {
   try {
     let cart = await fetch(`/api/carts`);
-    debugger;
     let cartJSON = await cart.json();
-    debugger;
     return cartJSON.cart;
   } catch(error) {
     console.log(error);
   }
 }
 
-export const addProductAndReturnCart = async (product) => {
-  let cart = {cart_id: product.cart_id};
-  debugger;
+export const addProductAndReturnCart = async (productId, cartId) => {
   try {
-    let newcart = await fetch(`/api/products/${product.id}`, {
+    let newcart = await fetch(`/api/products/${productId}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(cart)
+      body: JSON.stringify({cart: {cart_id: cartId}})
     });
-    debugger;
     let cartJSON = await newcart.json();
-    debugger;
     return cartJSON.cart;
   } catch(error) {
     console.log(error);

@@ -5,7 +5,7 @@ import NavBar from './navbar';
 import Cart from './cart';
 
 
-const App = () => {
+const Router = () => {
     return (
         <div className="app-body">
             <NavBar count={0}/>
@@ -18,4 +18,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Router;
