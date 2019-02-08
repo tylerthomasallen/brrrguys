@@ -1,52 +1,34 @@
 import React, { Component } from 'react';
-import { getProducts, getCart, addProductAndReturnCart } from '../../api';
-import NavBar from '../navbar';
+import { retrieveProducts } from '../../actions'
 import Product from '../product';
+import { connect } from 'react-redux';
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-      loading: true
-    }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     products: [],
+  //     loading: true
+  //   }
 
-    this.addToCart = this.addToCart.bind(this);
-  }
+  //   this.addToCart = this.addToCart.bind(this);
+  // }
 
   async componentDidMount() {
-    let { products, cart } = this.state;
-
+    const { products, retrieveProducts } = this.props;
     if (products.length <= 0) {
-      products = await getProducts();
-      await this.setState({products})
+      debugger;
+      await retrieveProducts()
     }
-
-    if (cart.count === undefined) {
-      cart = await getCart();
-      await this.setState({cart})
-    }
-
-    await this.setState({loading: false})
-  }
-
-  async addToCart(id) {
-    let { cart } = this.state;
-    let product = {id, cart_id: cart.id};
-    debugger;
-    cart = await addProductAndReturnCart(product);
-    await this.setState({cart});
   }
 
   render() {
-    const { products } = this.state;
+    const { products } = this.props;
     return(
       <div className="parent-container">
-        {/* <NavBar count={products.length}/> */}
-       
         <div className="product-container"> 
           {products.map(product => {
-            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} addToCart={this.addToCart} productId={product.id}/>
+            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} productId={product.id}/>
           })}
         </div>
       </div>
@@ -54,4 +36,19 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = ({products}) => {
+  return {
+    products
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    retrieveProducts: () => dispatch(retrieveProducts())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);

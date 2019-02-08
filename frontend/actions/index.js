@@ -17,14 +17,15 @@ export const receiveCart = payload => {
     };
 };
 
-export const retrieveProducts = async () => dispatch => {
+export const retrieveProducts = () => async dispatch => {
     let products = await getProducts()
+    debugger;
     return(
         dispatch(receiveProducts(products))
     );
 };
 
-export const retrieveCart = async () => dispatch => {
+export const retrieveCart = () => async dispatch => {
     let cart = await getCart();
     return (
         dispatch(receiveCart(cart))

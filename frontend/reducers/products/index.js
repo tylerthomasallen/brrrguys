@@ -1,10 +1,9 @@
-// import { RECEIVE_CURRENT_USER, RECEIVE_USER } from '../../../actions/session_actions';
-// import merge from 'lodash/merge';
+import { RECEIVE_PRODUCTS } from '../../actions';
 
-const productsReducer = (state = {}, action) => {
+const productsReducer = (state = [], action) => {
     switch (action.type) {
-        // case RECEIVE_PRODUCTS:
-        //     return {...state, products: action.payload }
+        case RECEIVE_PRODUCTS:
+            return state.concat(action.payload);
         default:
             return state;
     }

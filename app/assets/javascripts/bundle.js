@@ -86,6 +86,111 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/index.js":
+/*!***********************************!*\
+  !*** ./frontend/actions/index.js ***!
+  \***********************************/
+/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_PRODUCTS", function() { return RECEIVE_PRODUCTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CART", function() { return RECEIVE_CART; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveProducts", function() { return receiveProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCart", function() { return receiveCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveProducts", function() { return retrieveProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveCart", function() { return retrieveCart; });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./frontend/api/index.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
+var RECEIVE_CART = 'RECEIVE_CART';
+var receiveProducts = function receiveProducts(payload) {
+  return {
+    type: RECEIVE_PRODUCTS,
+    payload: payload
+  };
+};
+var receiveCart = function receiveCart(payload) {
+  return {
+    type: RECEIVE_CART,
+    payload: payload
+  };
+};
+var retrieveProducts = function retrieveProducts() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(dispatch) {
+        var products;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getProducts"])();
+
+              case 2:
+                products = _context.sent;
+                debugger;
+                return _context.abrupt("return", dispatch(receiveProducts(products)));
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }()
+  );
+};
+var retrieveCart = function retrieveCart() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var cart;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getCart"])();
+
+              case 2:
+                cart = _context2.sent;
+                return _context2.abrupt("return", dispatch(receiveCart(cart)));
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
+
+/***/ }),
+
 /***/ "./frontend/api/index.js":
 /*!*******************************!*\
   !*** ./frontend/api/index.js ***!
@@ -124,19 +229,20 @@ function () {
 
           case 6:
             productsJSON = _context.sent;
+            debugger;
             return _context.abrupt("return", productsJSON.products);
 
-          case 10:
-            _context.prev = 10;
+          case 11:
+            _context.prev = 11;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
 
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 10]]);
+    }, _callee, this, [[0, 11]]);
   }));
 
   return function getProducts() {
@@ -317,9 +423,9 @@ var Cart = function Cart(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api */ "./frontend/api/index.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../navbar */ "./frontend/components/navbar/index.js");
-/* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../product */ "./frontend/components/product/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+/* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../product */ "./frontend/components/product/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -334,13 +440,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -352,72 +458,44 @@ var HomePage =
 function (_Component) {
   _inherits(HomePage, _Component);
 
-  function HomePage(props) {
-    var _this;
-
+  function HomePage() {
     _classCallCheck(this, HomePage);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(HomePage).call(this, props));
-    _this.state = {
-      products: [],
-      loading: true
-    };
-    _this.addToCart = _this.addToCart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(HomePage).apply(this, arguments));
   }
 
   _createClass(HomePage, [{
     key: "componentDidMount",
+    // constructor(props) {
+    //   super(props);
+    //   this.state = {
+    //     products: [],
+    //     loading: true
+    //   }
+    //   this.addToCart = this.addToCart.bind(this);
+    // }
     value: function () {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var _this$state, products, cart;
+        var _this$props, products, retrieveProducts;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this$state = this.state, products = _this$state.products, cart = _this$state.cart;
+                _this$props = this.props, products = _this$props.products, retrieveProducts = _this$props.retrieveProducts;
 
                 if (!(products.length <= 0)) {
-                  _context.next = 7;
+                  _context.next = 5;
                   break;
                 }
 
-                _context.next = 4;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_1__["getProducts"])();
+                debugger;
+                _context.next = 5;
+                return retrieveProducts();
 
-              case 4:
-                products = _context.sent;
-                _context.next = 7;
-                return this.setState({
-                  products: products
-                });
-
-              case 7:
-                if (!(cart.count === undefined)) {
-                  _context.next = 13;
-                  break;
-                }
-
-                _context.next = 10;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_1__["getCart"])();
-
-              case 10:
-                cart = _context.sent;
-                _context.next = 13;
-                return this.setState({
-                  cart: cart
-                });
-
-              case 13:
-                _context.next = 15;
-                return this.setState({
-                  loading: false
-                });
-
-              case 15:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -432,63 +510,19 @@ function (_Component) {
       return componentDidMount;
     }()
   }, {
-    key: "addToCart",
-    value: function () {
-      var _addToCart = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(id) {
-        var cart, product;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                cart = this.state.cart;
-                product = {
-                  id: id,
-                  cart_id: cart.id
-                };
-                debugger;
-                _context2.next = 5;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_1__["addProductAndReturnCart"])(product);
-
-              case 5:
-                cart = _context2.sent;
-                _context2.next = 8;
-                return this.setState({
-                  cart: cart
-                });
-
-              case 8:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function addToCart(_x) {
-        return _addToCart.apply(this, arguments);
-      }
-
-      return addToCart;
-    }()
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      var products = this.state.products;
+      var products = this.props.products;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "parent-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "product-container"
       }, products.map(function (product) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: product.id,
           title: product.title,
           imgUrl: product.photoUrl,
           price: product.price,
-          addToCart: _this2.addToCart,
           productId: product.id
         });
       })));
@@ -498,7 +532,22 @@ function (_Component) {
   return HomePage;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (HomePage);
+var mapStateToProps = function mapStateToProps(_ref) {
+  var products = _ref.products;
+  return {
+    products: products
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    retrieveProducts: function retrieveProducts() {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_1__["retrieveProducts"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(HomePage));
 
 /***/ }),
 
@@ -678,14 +727,14 @@ var cartReducer = function cartReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./products */ "./frontend/reducers/products/index.js");
-/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cart */ "./frontend/reducers/cart/index.js");
+/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./products */ "./frontend/reducers/products/index.js");
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cart */ "./frontend/reducers/cart/index.js");
 
 
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  products: _products__WEBPACK_IMPORTED_MODULE_2__["default"],
-  cart: _cart__WEBPACK_IMPORTED_MODULE_3__["default"]
+  products: _products__WEBPACK_IMPORTED_MODULE_1__["default"],
+  cart: _cart__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
 
@@ -700,15 +749,17 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-// import { RECEIVE_CURRENT_USER, RECEIVE_USER } from '../../../actions/session_actions';
-// import merge from 'lodash/merge';
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+
+
 var productsReducer = function productsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    // case RECEIVE_PRODUCTS:
-    //     return {...state, products: action.payload }
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_PRODUCTS"]:
+      return state.concat(action.payload);
+
     default:
       return state;
   }
@@ -735,8 +786,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var configureStore = function configureStore() {
-  var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers___WEBPACK_IMPORTED_MODULE_2__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers___WEBPACK_IMPORTED_MODULE_2__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
