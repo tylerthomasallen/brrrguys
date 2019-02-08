@@ -1,25 +1,16 @@
 import React, {Component} from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import HomePage from './homepage'
-import Cart from './cart';
-import NavBar from './navbar';
+import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import App from './app';
 
-
-class Root extends Component {
-
-    render() {
-        return(
+const Root = ({store}) => {
+    return (
+        <Provider store={store}>
             <HashRouter>
-                {/* <NavBar /> */}
-                <Switch>
-                    <Route exact path="/cart" component={Cart} />
-                    <Route exact path="/" component={HomePage} />
-                    <Redirect to="/" />
-                </Switch>
-            </HashRouter> 
-        )
-    }
-
-}
+                <App />
+            </HashRouter>
+        </Provider>
+    );
+};
 
 export default Root;

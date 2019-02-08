@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   has_one_attached :photo
 
   belongs_to :cart,
+    optional: :true,
     foreign_key: :cart_id,
     class_name: :Cart
 end

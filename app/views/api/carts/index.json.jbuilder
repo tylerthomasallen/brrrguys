@@ -1,1 +1,1 @@
-json.cart @cart, :id, :count, :products
+json.cart @cart, :id, :products

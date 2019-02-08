@@ -8,7 +8,6 @@ class HomePage extends Component {
     super(props);
     this.state = {
       products: [],
-      cart: {},
       loading: true
     }
 
@@ -43,7 +42,7 @@ class HomePage extends Component {
     const { products } = this.state;
     return(
       <div className="parent-container">
-        <NavBar count={products.length}/>
+        {/* <NavBar count={products.length}/> */}
        
         <div className="product-container"> 
           {products.map(product => {
