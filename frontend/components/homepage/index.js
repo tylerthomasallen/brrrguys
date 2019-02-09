@@ -22,7 +22,7 @@ class HomePage extends Component {
       <div className="parent-container">
         <div className="product-container"> 
           {products.map(product => {
-            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} productId={product.id}/>
+            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} productId={product.id} isCart={false}/>
           })}
         </div>
       </div>

@@ -15,12 +15,10 @@ class Api::ProductsController < ApplicationController
     
     @product = Product.find(params[:id])
     @cart = Cart.find(cart_params[:cart_id])
-    debugger
-
 
     if @product.update(cart_params)
-      debugger
-      render "api/carts/index"
+      @products = @cart.products
+      render "api/products/update"
     else
       render json: @product.errors.full_messages, status: 404
     end
