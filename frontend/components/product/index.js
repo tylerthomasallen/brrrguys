@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToCart } from '../../actions';
+import { addToCart, removeFromCart } from '../../actions';
 
 class Product extends Component {
     render() {
-        const { title, imgUrl, price, addToCart, productId, cartId, isCart } = this.props;
+        const { title, imgUrl, price, addToCart, productId, cartId, isCart, removeFromCart } = this.props;
         if (isCart) {
             return (
                 <div className="cart-item">
@@ -12,7 +12,10 @@ class Product extends Component {
                         <img className="cart-image" src={imgUrl}></img>
                         <span className="title">{title}</span>
                     </div>
-                    <span className="price">${price} /ea </span>
+                    <div className="cart-item-price">
+                        <span className="price">${price} /ea </span>
+                        <i className="fas fa-trash-alt" onClick={() => removeFromCart(productId)}></i>
+                    </div>
                 </div>
             )} else {
             return (
@@ -37,7 +40,8 @@ const mapStateToProps = ({cart}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addToCart: (productId, cartId) => dispatch(addToCart(productId, cartId))
+        addToCart: (productId, cartId) => dispatch(addToCart(productId, cartId)),
+        removeFromCart: (productId) => dispatch(removeFromCart(productId))
     };
 };
 

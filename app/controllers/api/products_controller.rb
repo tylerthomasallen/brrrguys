@@ -11,6 +11,24 @@ class Api::ProductsController < ApplicationController
     render "api/products/show"
   end
 
+  def edit
+    @product = Product.find(params[:id])
+    @cart = Cart.find(@product.cart_id)
+
+    
+    if @product.update_column(:cart_id, nil)
+      if @cart
+        @products = @cart.products
+        render "api/products/update"
+      else
+        render json: @cart.errors.full_messages, status: 404
+      end
+
+    else
+      render json: @product.errors.full_messages, status: 404
+    end
+  end
+
   def update
     
     @product = Product.find(params[:id])

@@ -90,7 +90,7 @@
 /*!***********************************!*\
   !*** ./frontend/actions/index.js ***!
   \***********************************/
-/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart, addToCart */
+/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart, addToCart, removeFromCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102,6 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveProducts", function() { return retrieveProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveCart", function() { return retrieveCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToCart", function() { return addToCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFromCart", function() { return removeFromCart; });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./frontend/api/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -221,6 +222,39 @@ var addToCart = function addToCart(productId, cartId) {
     }()
   );
 };
+var removeFromCart = function removeFromCart(productId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var cart;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["removeProductAndReturnCart"])(productId);
+
+              case 2:
+                cart = _context4.sent;
+                return _context4.abrupt("return", dispatch(receiveCart(cart)));
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x4) {
+        return _ref4.apply(this, arguments);
+      };
+    }()
+  );
+};
 
 /***/ }),
 
@@ -228,7 +262,7 @@ var addToCart = function addToCart(productId, cartId) {
 /*!*******************************!*\
   !*** ./frontend/api/index.js ***!
   \*******************************/
-/*! exports provided: getProducts, getCart, addProductAndReturnCart */
+/*! exports provided: getProducts, getCart, addProductAndReturnCart, removeProductAndReturnCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -236,6 +270,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getProducts", function() { return getProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCart", function() { return getCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addProductAndReturnCart", function() { return addProductAndReturnCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeProductAndReturnCart", function() { return removeProductAndReturnCart; });
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -328,7 +363,7 @@ function () {
   var _ref3 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee3(productId, cartId) {
-    var newcart, cartJSON;
+    var cart, cartJSON;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -348,9 +383,9 @@ function () {
             });
 
           case 3:
-            newcart = _context3.sent;
+            cart = _context3.sent;
             _context3.next = 6;
-            return newcart.json();
+            return cart.json();
 
           case 6:
             cartJSON = _context3.sent;
@@ -373,6 +408,47 @@ function () {
     return _ref3.apply(this, arguments);
   };
 }();
+var removeProductAndReturnCart =
+/*#__PURE__*/
+function () {
+  var _ref4 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee4(productId) {
+    var cart, cartJSON;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return fetch("/api/products/".concat(productId, "/edit"));
+
+          case 3:
+            cart = _context4.sent;
+            _context4.next = 6;
+            return cart.json();
+
+          case 6:
+            cartJSON = _context4.sent;
+            return _context4.abrupt("return", cartJSON.cart);
+
+          case 10:
+            _context4.prev = 10;
+            _context4.t0 = _context4["catch"](0);
+            console.log(_context4.t0);
+
+          case 13:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, this, [[0, 10]]);
+  }));
+
+  return function removeProductAndReturnCart(_x3) {
+    return _ref4.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 
@@ -391,6 +467,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
 /* harmony import */ var _product__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../product */ "./frontend/components/product/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -424,12 +502,26 @@ function (_Component) {
     _classCallCheck(this, Cart);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
+    _this.state = {
+      firstName: "",
+      lastName: "",
+      email: ""
+    };
     _this.getTotal = _this.getTotal.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.checkout = _this.checkout.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(Cart, [{
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
     key: "checkout",
     value: function checkout() {
       console.log('Checking out!');
@@ -441,8 +533,8 @@ function (_Component) {
 
       if (products.length >= 1) {
         return products.reduce(function (acc, product) {
-          return acc.price + product.price;
-        });
+          return acc + product.price;
+        }, 0);
       }
     }
   }, {
@@ -460,11 +552,10 @@ function (_Component) {
     key: "render",
     value: function render() {
       var cart = this.props.cart;
-      var _this$props2 = this.props,
-          firstName = _this$props2.firstName,
-          lastName = _this$props2.lastName,
-          email = _this$props2.email;
-      var formType = "Place Order";
+      var _this$state = this.state,
+          firstName = _this$state.firstName,
+          lastName = _this$state.lastName,
+          email = _this$state.email;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cart-parent-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -475,7 +566,8 @@ function (_Component) {
           title: product.title,
           imgUrl: product.photoUrl,
           price: product.price,
-          isCart: true
+          isCart: true,
+          productId: product.id
         });
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "total-container"
@@ -488,19 +580,22 @@ function (_Component) {
         placeholder: "First Name",
         required: true,
         name: "fname",
-        value: firstName
+        value: firstName,
+        onChange: this.update("firstName")
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "Last Name",
         required: true,
         name: "lname",
-        value: lastName
+        value: lastName,
+        onChange: this.update("lastName")
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "Email",
         required: true,
         name: "email",
-        value: email
+        value: email,
+        onChange: this.update("email")
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Place Order"
@@ -781,7 +876,8 @@ function (_Component) {
           addToCart = _this$props.addToCart,
           productId = _this$props.productId,
           cartId = _this$props.cartId,
-          isCart = _this$props.isCart;
+          isCart = _this$props.isCart,
+          removeFromCart = _this$props.removeFromCart;
 
       if (isCart) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -793,9 +889,16 @@ function (_Component) {
           src: imgUrl
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "title"
-        }, title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "cart-item-price"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "price"
-        }, "$", price, " /ea "));
+        }, "$", price, " /ea "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-trash-alt",
+          onClick: function onClick() {
+            return removeFromCart(productId);
+          }
+        })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "product-item"
@@ -831,6 +934,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     addToCart: function addToCart(productId, cartId) {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["addToCart"])(productId, cartId));
+    },
+    removeFromCart: function removeFromCart(productId) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["removeFromCart"])(productId));
     }
   };
 };
@@ -955,10 +1061,6 @@ document.addEventListener('DOMContentLoaded', function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var cartReducer = function cartReducer() {
@@ -969,7 +1071,8 @@ var cartReducer = function cartReducer() {
 
   switch (action.type) {
     case _actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CART"]:
-      return _objectSpread({}, state, action.payload);
+      debugger;
+      return action.payload;
 
     default:
       return state;

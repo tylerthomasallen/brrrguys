@@ -1,4 +1,5 @@
 json.set! :cart do 
+    json.set! :id, @cart.id
     json.set! :products do 
         json.array! @products do |product|
             json.id product.id

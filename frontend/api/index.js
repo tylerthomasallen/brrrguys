@@ -20,14 +20,25 @@ export const getCart = async () => {
 
 export const addProductAndReturnCart = async (productId, cartId) => {
   try {
-    let newcart = await fetch(`/api/products/${productId}`, {
+    let cart = await fetch(`/api/products/${productId}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({cart: {cart_id: cartId}})
     });
-    let cartJSON = await newcart.json();
+    let cartJSON = await cart.json();
     return cartJSON.cart;
   } catch(error) {
     console.log(error);
+  }
+}
+
+
+export const removeProductAndReturnCart = async (productId) => {
+  try {
+    let cart = await fetch(`/api/products/${productId}/edit`);
+    let cartJSON = await cart.json();
+    return cartJSON.cart;
+  } catch(error) {
+    console.log(error)
   }
 }
