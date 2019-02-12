@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { retrieveProducts, retrieveCart } from '../../actions'
-import Product from '../product';
+import Product from '../product/product_item';
 import { connect } from 'react-redux';
 
 class HomePage extends Component {
 
   async componentDidMount() {
     const { products, retrieveProducts, cart, retrieveCart } = this.props;
-    if (products.length <= 0) {
+    if (products.length <= 9) {
       await retrieveProducts()
     }
 

@@ -1,4 +1,4 @@
-import { getProducts, getCart, addProductAndReturnCart, removeProductAndReturnCart } from '../api';
+import { getProducts, getCart, addProductAndReturnCart, removeProductAndReturnCart, getProduct } from '../api';
 
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const RECEIVE_CART = 'RECEIVE_CART';
@@ -16,6 +16,13 @@ export const receiveCart = payload => {
         payload
     };
 };
+
+export const retrieveProduct = (productId) => async dispatch => {
+    let product = await getProduct(productId)
+    return(
+        dispatch(receiveProducts(product))
+    )
+}
 
 export const retrieveProducts = () => async dispatch => {
     let products = await getProducts()

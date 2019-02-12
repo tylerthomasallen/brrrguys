@@ -8,6 +8,16 @@ export const getProducts = async () => {
   }
 }
 
+export const getProduct = async (productId) => {
+  try {
+    let product = await fetch(`/api/products/${productId}`)
+    let productJSON = await product.json();
+    return productJSON.products
+  } catch(error) {
+    console.log(error)
+  }
+}
+
 export const getCart = async () => {
   try {
     let cart = await fetch(`/api/carts`);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { retrieveCart } from '../../actions';
-import Product from '../product';
+import Product from '../product/product_item';
 
 class Cart extends Component {
     constructor(props) {
