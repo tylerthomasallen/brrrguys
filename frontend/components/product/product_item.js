@@ -101,7 +101,7 @@ class ProductItem extends Component {
                     <span className="title">{title}</span>
                     <div className="price-cart-container">
                         <span className="price">${price} /ea </span>
-                        <span className="price add" onClick={() => addToCart(productId, cartId)}>Add</span>
+                        <span className="price add">Add</span>
                     </div>
                 </Link>
             )

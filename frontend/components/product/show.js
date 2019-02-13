@@ -31,7 +31,6 @@ class ProductShow extends Component {
 const mapStateToProps = ({ products, cart }, ownProps) => {
     const { productId } = ownProps.match.params;
     const product = products.filter(product => product.id === parseInt(productId))
-    debugger;
     return {
         product,
         productId,

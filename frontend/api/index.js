@@ -36,7 +36,6 @@ export const addProductAndReturnCart = async (productInput) => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(product)
     });
-    debugger;
     let cartJSON = await cart.json();
     return cartJSON.cart;
   } catch(error) {
@@ -44,9 +43,22 @@ export const addProductAndReturnCart = async (productInput) => {
   }
 }
 
+export const checkoutAndReturnCart = async (user, cartId) => {
+  try {
+    let cart = await fetch(`api/carts/${cartId}`, {
+      method: "PUT",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({user})
+    });
+    let cartJSON = await cart.json();
+    return cartJSON.cart;
+  } catch(error) {
+    console.log(error)
+  }
+}
+
 
 export const removeProductAndReturnCart = async (productId) => {
-  debugger
   try {
     let cart = await fetch(`/api/products/${productId}/edit`);
     let cartJSON = await cart.json();

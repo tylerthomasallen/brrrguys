@@ -1,4 +1,4 @@
-import { getProducts, getCart, addProductAndReturnCart, removeProductAndReturnCart, getProduct } from '../api';
+import { getProducts, getCart, addProductAndReturnCart, removeProductAndReturnCart, getProduct, checkoutAndReturnCart } from '../api';
 
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const RECEIVE_CART = 'RECEIVE_CART';
@@ -11,7 +11,6 @@ export const receiveProducts = payload => {
 };
 
 export const receiveCart = payload => {
-    debugger;
     return {
         type: RECEIVE_CART,
         payload
@@ -40,7 +39,6 @@ export const retrieveCart = () => async dispatch => {
 };
 
 export const addToCart = (product) => async dispatch => {
-    debugger;
     let cart = await addProductAndReturnCart(product);
     return(
         dispatch(receiveCart(cart))
@@ -49,6 +47,13 @@ export const addToCart = (product) => async dispatch => {
 
 export const removeFromCart = (productId) => async dispatch => {
     let cart = await removeProductAndReturnCart(productId);
+    return(
+        dispatch(receiveCart(cart))
+    )
+}
+
+export const checkout = (user, cartId) => async dispatch => {
+    let cart = await checkoutAndReturnCart(user, cartId);
     return(
         dispatch(receiveCart(cart))
     )
