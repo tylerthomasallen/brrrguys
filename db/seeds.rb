@@ -8,7 +8,10 @@
 
 require 'faker'
 
-Product.destroy_all
+if Product.first
+    Product.destroy_all
+end
+
 prices = [3.99, 4.59, 4.99, 5.49, 6.59, 7.59, 8.99, 9.99]
 
 i = 0
@@ -18,5 +21,8 @@ while i <= 9
     i += 1
 end
 
-Cart.destroy_all
+if Cart.first
+    Cart.destroy_all
+end
+
 Cart.create
