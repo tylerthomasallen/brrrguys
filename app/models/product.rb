@@ -1,6 +1,12 @@
 class Product < ApplicationRecord
+  sizes = ["S", "M", "L", "XL"]
+  maxQuantity = 10
+  quantities = [*1..maxQuantity] 
+
   validates :title, :price, presence: true
   validates :title, uniqueness: true
+  validates :size, inclusion: { in: sizes }
+  validates :quantity, inclusion: { in: quantities }
 
   has_one_attached :photo
 

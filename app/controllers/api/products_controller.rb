@@ -14,9 +14,10 @@ class Api::ProductsController < ApplicationController
   def edit
     @product = Product.find(params[:id])
     @cart = Cart.find(@product.cart_id)
+    product_defaults = { cart_id: nil, size: "S", quantity: 1}
 
     
-    if @product.update_column(:cart_id, nil)
+    if @product.update(product_defaults)
       if @cart
         @products = @cart.products
         render "api/products/update"
@@ -32,9 +33,9 @@ class Api::ProductsController < ApplicationController
   def update
     
     @product = Product.find(params[:id])
-    @cart = Cart.find(cart_params[:cart_id])
+    @cart = Cart.find(product_params[:cart_id])
 
-    if @product.update(cart_params)
+    if @product.update(product_params)
       @products = @cart.products
       render "api/products/update"
     else
@@ -42,8 +43,8 @@ class Api::ProductsController < ApplicationController
     end
   end
 
-  def cart_params
-    params.require(:cart).permit(:cart_id)
+  def product_params
+    params.require(:product).permit(:cart_id, :size, :quantity)
   end
 
 end

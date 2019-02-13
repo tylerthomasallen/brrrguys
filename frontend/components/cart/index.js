@@ -28,7 +28,7 @@ class Cart extends Component {
     getTotal() {
         const { products } = this.props.cart;
         if (products.length >= 1) {
-            return products.reduce((acc, product) => acc + product.price, 0)
+            return products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2);
         }
     }
 
@@ -46,7 +46,15 @@ class Cart extends Component {
             <div className="cart-parent-container">
                 <div className="product-container cart-container">
                     {cart.products.map(product => {
-                        return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} isCart={true} productId={product.id} />
+                        return <Product key={product.id} 
+                            title={product.title} 
+                            imgUrl={product.photoUrl} 
+                            price={product.price} 
+                            isCart={true} 
+                            productId={product.id} 
+                            size={product.size}
+                            quantity={product.quantity}
+                            />
                     })}
                 </div>
 

@@ -1,0 +1,45 @@
+.product-show-container {
+    display: flex;
+    justify-content: center;
+
+    .show-item {
+        cursor: auto;
+
+        .price-show-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                margin: 10px;
+            }
+
+            form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                select {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    border: 1px solid black;
+                    margin: 5px;
+                }
+
+                input {
+                    margin: 10px;
+                    margin-left: 15px;
+                    font-size: 16px;
+                }
+            }
+        }
+
+    }
+
+    .show-item:hover {
+        box-shadow: none;
+    }
+    
+}

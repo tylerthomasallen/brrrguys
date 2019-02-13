@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 
 class HomePage extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   async componentDidMount() {
     const { products, retrieveProducts, cart, retrieveCart } = this.props;
     if (products.length <= 9) {

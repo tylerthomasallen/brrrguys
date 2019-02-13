@@ -119,6 +119,7 @@ var receiveProducts = function receiveProducts(payload) {
   };
 };
 var receiveCart = function receiveCart(payload) {
+  debugger;
   return {
     type: RECEIVE_CART,
     payload: payload
@@ -223,7 +224,7 @@ var retrieveCart = function retrieveCart() {
     }()
   );
 };
-var addToCart = function addToCart(productId, cartId) {
+var addToCart = function addToCart(product) {
   return (
     /*#__PURE__*/
     function () {
@@ -235,14 +236,15 @@ var addToCart = function addToCart(productId, cartId) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["addProductAndReturnCart"])(productId, cartId);
+                debugger;
+                _context4.next = 3;
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["addProductAndReturnCart"])(product);
 
-              case 2:
+              case 3:
                 cart = _context4.sent;
                 return _context4.abrupt("return", dispatch(receiveCart(cart)));
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -438,49 +440,51 @@ var addProductAndReturnCart =
 function () {
   var _ref4 = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee4(productId, cartId) {
-    var cart, cartJSON;
+  regeneratorRuntime.mark(function _callee4(productInput) {
+    var product, cart, cartJSON;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return fetch("/api/products/".concat(productId), {
+            product = {
+              cart_id: productInput.cartId,
+              size: productInput.size,
+              quantity: productInput.quantity
+            };
+            _context4.prev = 1;
+            _context4.next = 4;
+            return fetch("/api/products/".concat(productInput.productId), {
               method: "PUT",
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({
-                cart: {
-                  cart_id: cartId
-                }
-              })
+              body: JSON.stringify(product)
             });
 
-          case 3:
+          case 4:
             cart = _context4.sent;
-            _context4.next = 6;
+            debugger;
+            _context4.next = 8;
             return cart.json();
 
-          case 6:
+          case 8:
             cartJSON = _context4.sent;
             return _context4.abrupt("return", cartJSON.cart);
 
-          case 10:
-            _context4.prev = 10;
-            _context4.t0 = _context4["catch"](0);
+          case 12:
+            _context4.prev = 12;
+            _context4.t0 = _context4["catch"](1);
             console.log(_context4.t0);
 
-          case 13:
+          case 15:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, this, [[0, 10]]);
+    }, _callee4, this, [[1, 12]]);
   }));
 
-  return function addProductAndReturnCart(_x2, _x3) {
+  return function addProductAndReturnCart(_x2) {
     return _ref4.apply(this, arguments);
   };
 }();
@@ -495,33 +499,34 @@ function () {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
+            debugger;
+            _context5.prev = 1;
+            _context5.next = 4;
             return fetch("/api/products/".concat(productId, "/edit"));
 
-          case 3:
+          case 4:
             cart = _context5.sent;
-            _context5.next = 6;
+            _context5.next = 7;
             return cart.json();
 
-          case 6:
+          case 7:
             cartJSON = _context5.sent;
             return _context5.abrupt("return", cartJSON.cart);
 
-          case 10:
-            _context5.prev = 10;
-            _context5.t0 = _context5["catch"](0);
+          case 11:
+            _context5.prev = 11;
+            _context5.t0 = _context5["catch"](1);
             console.log(_context5.t0);
 
-          case 13:
+          case 14:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, this, [[0, 10]]);
+    }, _callee5, this, [[1, 11]]);
   }));
 
-  return function removeProductAndReturnCart(_x4) {
+  return function removeProductAndReturnCart(_x3) {
     return _ref5.apply(this, arguments);
   };
 }();
@@ -609,8 +614,8 @@ function (_Component) {
 
       if (products.length >= 1) {
         return products.reduce(function (acc, product) {
-          return acc + product.price;
-        }, 0);
+          return acc + product.price * product.quantity;
+        }, 0).toFixed(2);
       }
     }
   }, {
@@ -643,7 +648,9 @@ function (_Component) {
           imgUrl: product.photoUrl,
           price: product.price,
           isCart: true,
-          productId: product.id
+          productId: product.id,
+          size: product.size,
+          quantity: product.quantity
         });
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "total-container"
@@ -747,10 +754,10 @@ var HomePage =
 function (_Component) {
   _inherits(HomePage, _Component);
 
-  function HomePage() {
+  function HomePage(props) {
     _classCallCheck(this, HomePage);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(HomePage).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(HomePage).call(this, props));
   }
 
   _createClass(HomePage, [{
@@ -912,6 +919,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -920,13 +935,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -938,24 +953,114 @@ var ProductItem =
 function (_Component) {
   _inherits(ProductItem, _Component);
 
-  function ProductItem() {
+  function ProductItem(props) {
+    var _this;
+
     _classCallCheck(this, ProductItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ProductItem).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProductItem).call(this, props));
+    var _this$props = _this.props,
+        cartId = _this$props.cartId,
+        productId = _this$props.productId;
+    _this.state = {
+      cartId: cartId,
+      productId: productId,
+      size: "S",
+      quantity: "1"
+    };
+    _this.submit = _this.submit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(ProductItem, [{
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: "quantity",
+    value: function quantity() {
+      var maxQuantity = 10;
+      var quantity = [];
+
+      for (var i = 1; i <= maxQuantity; i++) {
+        quantity.push(i);
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: this.update("quantity")
+      }, quantity.map(function (amount, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: amount
+        }, amount);
+      }));
+    }
+  }, {
+    key: "size",
+    value: function size() {
+      var sizes = ['S', 'M', 'L', 'XL'];
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: this.update("size")
+      }, sizes.map(function (size, idx) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: size
+        }, size);
+      }));
+    }
+  }, {
+    key: "submit",
+    value: function () {
+      var _submit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(e) {
+        var addToCart, product;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                e.preventDefault();
+                this.props.history.push('/');
+                addToCart = this.props.addToCart;
+                product = _objectSpread({}, this.state);
+                product.quantity = parseInt(product.quantity);
+                _context.next = 7;
+                return addToCart(product);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submit(_x) {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          title = _this$props.title,
-          imgUrl = _this$props.imgUrl,
-          price = _this$props.price,
-          addToCart = _this$props.addToCart,
-          productId = _this$props.productId,
-          cartId = _this$props.cartId,
-          isCart = _this$props.isCart,
-          removeFromCart = _this$props.removeFromCart;
+      var _this$props2 = this.props,
+          title = _this$props2.title,
+          imgUrl = _this$props2.imgUrl,
+          price = _this$props2.price,
+          addToCart = _this$props2.addToCart,
+          productId = _this$props2.productId,
+          cartId = _this$props2.cartId,
+          isCart = _this$props2.isCart,
+          removeFromCart = _this$props2.removeFromCart,
+          isShow = _this$props2.isShow,
+          quantity = _this$props2.quantity,
+          size = _this$props2.size;
 
       if (isCart) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -971,12 +1076,30 @@ function (_Component) {
           className: "cart-item-price"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "price"
-        }, "$", price, " /ea "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        }, "$", price, " /ea "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Qty: ", quantity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Size: ", size), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-trash-alt",
           onClick: function onClick() {
             return removeFromCart(productId);
           }
         })));
+      } else if (isShow) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "product-item show-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: imgUrl
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "title"
+        }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "price-cart-container price-show-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "price"
+        }, "$", price, " /ea "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.submit
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Qty: "), this.quantity(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Size: "), this.size(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "submit",
+          className: "price add",
+          value: "Add"
+        }))));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
           to: "/beer/".concat(productId),
@@ -1011,8 +1134,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    addToCart: function addToCart(productId, cartId) {
-      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["addToCart"])(productId, cartId));
+    addToCart: function addToCart(product) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["addToCart"])(product));
     },
     removeFromCart: function removeFromCart(productId) {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["removeFromCart"])(productId));
@@ -1020,40 +1143,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(ProductItem)); // constructor(props) {
-//     super(props);
-//     this.state = {
-//         modalOpen: true
-//     }
-//     this.modal = this.modal.bind(this);
-//     this.openModal = this.openModal.bind(this);
-//     this.closeModal = this.closeModal.bind(this);
-// }
-// openModal() {
-//     this.setState({modalOpen: true})
-//     debugger;
-// }
-// closeModal() {
-//     this.setState({modalOpen: false})
-// }
-// modal() {
-//     const { modalOpen } = this.state;
-//     const { title, imgUrl, price, addToCart, productId, cartId, isCart, removeFromCart } = this.props;
-//     if (modalOpen) {
-//         return (
-//             <div className="modal-container">
-//                 <div className="product-item modal-item">
-//                     <img src={imgUrl}></img>
-//                     <span className="title">{title}</span>
-//                     <div className="price-cart-container">
-//                         <span className="price">${price} /ea </span>
-//                         <span className="price add" onClick={() => addToCart(productId, cartId)}>Add</span>
-//                     </div>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(ProductItem)));
 
 /***/ }),
 
@@ -1115,13 +1205,13 @@ function (_Component) {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var _this$props, product, retrieveProduct, productId;
+        var _this$props, product, retrieveProduct, productId, cartId, retrieveCart;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this$props = this.props, product = _this$props.product, retrieveProduct = _this$props.retrieveProduct, productId = _this$props.productId;
+                _this$props = this.props, product = _this$props.product, retrieveProduct = _this$props.retrieveProduct, productId = _this$props.productId, cartId = _this$props.cartId, retrieveCart = _this$props.retrieveCart;
 
                 if (!(product.length <= 0)) {
                   _context.next = 4;
@@ -1132,6 +1222,15 @@ function (_Component) {
                 return retrieveProduct(productId);
 
               case 4:
+                if (!(cartId === undefined)) {
+                  _context.next = 7;
+                  break;
+                }
+
+                _context.next = 7;
+                return retrieveCart();
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -1148,8 +1247,9 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var product = this.props.product;
-      debugger;
+      var _this$props2 = this.props,
+          product = _this$props2.product,
+          cartId = _this$props2.cartId;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "product-show-container"
       }, product.map(function (prod) {
@@ -1158,8 +1258,9 @@ function (_Component) {
           title: prod.title,
           imgUrl: prod.photoUrl,
           price: prod.price,
-          isCart: true,
-          productId: prod.id
+          productId: prod.id,
+          isShow: true,
+          cartId: cartId
         });
       }));
     }
@@ -1169,7 +1270,8 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(_ref, ownProps) {
-  var products = _ref.products;
+  var products = _ref.products,
+      cart = _ref.cart;
   var productId = ownProps.match.params.productId;
   var product = products.filter(function (product) {
     return product.id === parseInt(productId);
@@ -1177,7 +1279,8 @@ var mapStateToProps = function mapStateToProps(_ref, ownProps) {
   debugger;
   return {
     product: product,
-    productId: productId
+    productId: productId,
+    cartId: cart.id
   };
 };
 
@@ -1211,6 +1314,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     }),
     retrieveProduct: function retrieveProduct(productId) {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["retrieveProduct"])(productId));
+    },
+    retrieveCart: function retrieveCart() {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["retrieveCart"])());
     }
   };
 };
@@ -1395,6 +1501,14 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 
 var productsReducer = function productsReducer() {
@@ -1403,7 +1517,7 @@ var productsReducer = function productsReducer() {
 
   switch (action.type) {
     case _actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_PRODUCTS"]:
-      return state.concat(action.payload);
+      return [].concat(_toConsumableArray(state), _toConsumableArray(action.payload));
 
     default:
       return state;

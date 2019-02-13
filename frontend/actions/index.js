@@ -11,6 +11,7 @@ export const receiveProducts = payload => {
 };
 
 export const receiveCart = payload => {
+    debugger;
     return {
         type: RECEIVE_CART,
         payload
@@ -38,8 +39,9 @@ export const retrieveCart = () => async dispatch => {
     );
 };
 
-export const addToCart = (productId, cartId) => async dispatch => {
-    let cart = await addProductAndReturnCart(productId, cartId);
+export const addToCart = (product) => async dispatch => {
+    debugger;
+    let cart = await addProductAndReturnCart(product);
     return(
         dispatch(receiveCart(cart))
     )

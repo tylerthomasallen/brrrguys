@@ -28,13 +28,15 @@ export const getCart = async () => {
   }
 }
 
-export const addProductAndReturnCart = async (productId, cartId) => {
+export const addProductAndReturnCart = async (productInput) => {
+  let product = { cart_id: productInput.cartId, size: productInput.size, quantity: productInput.quantity }
   try {
-    let cart = await fetch(`/api/products/${productId}`, {
+    let cart = await fetch(`/api/products/${productInput.productId}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({cart: {cart_id: cartId}})
+      body: JSON.stringify(product)
     });
+    debugger;
     let cartJSON = await cart.json();
     return cartJSON.cart;
   } catch(error) {
@@ -44,6 +46,7 @@ export const addProductAndReturnCart = async (productId, cartId) => {
 
 
 export const removeProductAndReturnCart = async (productId) => {
+  debugger
   try {
     let cart = await fetch(`/api/products/${productId}/edit`);
     let cartJSON = await cart.json();
