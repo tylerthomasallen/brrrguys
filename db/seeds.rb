@@ -17,7 +17,8 @@ prices = [3.99, 4.59, 4.99, 5.49, 6.59, 7.59, 8.99, 9.99]
 i = 0
 while i <= 9
     product = Product.create(title: Faker::Beer.unique.name, price: prices.sample)
-    # product.photo.attach(io: File.open("app/assets/images/beer/p#{i}.jpg"), filename: "beerphoto#{i}")
+    file = File.open("app/assets/images/beer/p#{i}.jpg")
+    product.photo.attach(io: file, filename: "beerphoto#{i}")
     i += 1
 end
 
