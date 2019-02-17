@@ -22,6 +22,7 @@ class Api::CartsController < ApplicationController
                 product.update(cart_id: nil)
                 @cart.products.delete(product)
             end
+
             
             render "api/carts/index"
         else 

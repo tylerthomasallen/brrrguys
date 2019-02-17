@@ -24,8 +24,10 @@ class Cart extends Component {
 
     async checkout() {
         const { checkout, cart } = this.props;
+        const { firstName, lastName, email } = this.state;
         if (cart.products.length >= 1) {
-            const user = { ...this.state };
+            const user = { firstName, lastName, email };
+            debugger;
             await checkout(user, cart.id);
             await this.setState({checkedOut: true})
         }

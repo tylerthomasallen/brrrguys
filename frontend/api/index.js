@@ -51,6 +51,7 @@ export const checkoutAndReturnCart = async (user, cartId) => {
       body: JSON.stringify({user})
     });
     let cartJSON = await cart.json();
+    debugger;
     return cartJSON.cart;
   } catch(error) {
     console.log(error)

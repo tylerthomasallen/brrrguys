@@ -53,6 +53,7 @@ export const removeFromCart = (productId) => async dispatch => {
 }
 
 export const checkout = (user, cartId) => async dispatch => {
+    debugger;
     let cart = await checkoutAndReturnCart(user, cartId);
     return(
         dispatch(receiveCart(cart))
