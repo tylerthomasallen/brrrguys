@@ -935,11 +935,11 @@ var Item = function Item(_ref) {
       type = _ref.type,
       _ref$customProps = _ref.customProps,
       customProps = _ref$customProps === void 0 ? {} : _ref$customProps;
-  var ComponentName = _shared_constants__WEBPACK_IMPORTED_MODULE_1__["COMPONENT_TYPES"][type];
+  var ItemName = _shared_constants__WEBPACK_IMPORTED_MODULE_1__["ITEM_TYPES"][type];
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "product-container"
   }, products.map(function (product, idx) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ComponentName, _extends({
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ItemName, _extends({
       key: "".concat(type, "-").concat(idx)
     }, product, customProps));
   }));
@@ -1522,7 +1522,7 @@ var productsReducer = function productsReducer() {
 /*!**************************************!*\
   !*** ./frontend/shared/constants.js ***!
   \**************************************/
-/*! exports provided: OK, SMALL, MEDIUM, LARGE, XTRA_LARGE, SIZES, QUANTITIES, HOME, CART, SHOW, COMPONENT_TYPES */
+/*! exports provided: OK, SMALL, MEDIUM, LARGE, XTRA_LARGE, SIZES, QUANTITIES, HOME, CART, SHOW, ITEM_TYPES */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1537,7 +1537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HOME", function() { return HOME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CART", function() { return CART; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHOW", function() { return SHOW; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COMPONENT_TYPES", function() { return COMPONENT_TYPES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ITEM_TYPES", function() { return ITEM_TYPES; });
 /* harmony import */ var _components_homepage_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/homepage/item */ "./frontend/components/homepage/item.js");
 /* harmony import */ var _components_cart_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/cart/item */ "./frontend/components/cart/item.js");
 /* harmony import */ var _components_show_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/show/item */ "./frontend/components/show/item.js");
@@ -1554,7 +1554,7 @@ var QUANTITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var HOME = 'HOME';
 var CART = 'CART';
 var SHOW = 'SHOW';
-var COMPONENT_TYPES = {
+var ITEM_TYPES = {
   HOME: _components_homepage_item__WEBPACK_IMPORTED_MODULE_0__["default"],
   CART: _components_cart_item__WEBPACK_IMPORTED_MODULE_1__["default"],
   SHOW: _components_show_item__WEBPACK_IMPORTED_MODULE_2__["default"]

@@ -16,7 +16,7 @@ export const HOME = 'HOME'
 export const CART = 'CART'
 export const SHOW = 'SHOW'
 
-export const COMPONENT_TYPES = {
+export const ITEM_TYPES = {
   HOME: HomeItem,
   CART: CartItem,
   SHOW: ShowItem
