@@ -14,4 +14,8 @@ class Product < ApplicationRecord
     optional: :true,
     foreign_key: :cart_id,
     class_name: :Cart
+
+    def reset
+      self.update!(cart_id: nil, size: 'S', quantity: 1)
+    end
 end

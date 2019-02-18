@@ -1,3 +1,5 @@
+import { OK } from '../shared/constants'
+
 export const getProducts = async () => {
   try {
     let products = await fetch(`/api/products`);
@@ -5,16 +7,6 @@ export const getProducts = async () => {
     return productsJSON.products;
   } catch(error) {
     console.log(error);
-  }
-}
-
-export const getProduct = async (productId) => {
-  try {
-    let product = await fetch(`/api/products/${productId}`)
-    let productJSON = await product.json();
-    return productJSON.products
-  } catch(error) {
-    console.log(error)
   }
 }
 
@@ -28,43 +20,34 @@ export const getCart = async () => {
   }
 }
 
-export const addProductAndReturnCart = async (productInput) => {
-  let product = { cart_id: productInput.cartId, size: productInput.size, quantity: productInput.quantity }
+export const addProduct = async (product) => {
   try {
-    let cart = await fetch(`/api/products/${productInput.productId}`, {
-      method: "PUT",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(product)
-    });
-    let cartJSON = await cart.json();
-    return cartJSON.cart;
+    const res = await fetch(`/api/products/${product.id}`, postBody({ product }))
+    return res.status === OK
   } catch(error) {
     console.log(error);
   }
 }
 
-export const checkoutAndReturnCart = async (user, cartId) => {
+export const removeProduct = async (productId) => {
   try {
-    let cart = await fetch(`api/carts/${cartId}`, {
-      method: "PUT",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({user})
-    });
-    let cartJSON = await cart.json();
-    debugger;
-    return cartJSON.cart;
+    await fetch(`/api/products/${productId}/edit`);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const checkout = async (user, cartId) => {
+  try {
+    const res = await fetch(`api/carts/${cartId}`, postBody({ user }))
+    return res.status === OK
   } catch(error) {
     console.log(error)
   }
 }
 
-
-export const removeProductAndReturnCart = async (productId) => {
-  try {
-    let cart = await fetch(`/api/products/${productId}/edit`);
-    let cartJSON = await cart.json();
-    return cartJSON.cart;
-  } catch(error) {
-    console.log(error)
-  }
-}
+const postBody = body => ({
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body)
+})

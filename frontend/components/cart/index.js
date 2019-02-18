@@ -1,110 +1,92 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { retrieveCart, checkout } from '../../actions';
-import Product from '../product/product_item';
+import CheckedOut from './checked_out';
+import { retrieveCart } from '../../actions';
+import { checkout } from '../../api';
+import Item from '../item';
+import { CART } from '../../shared/constants';
 
 class Cart extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            checkedOut: false
-        }
-        this.getTotal = this.getTotal.bind(this);
-        this.checkout = this.checkout.bind(this);
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      checkedOut: false
     }
 
-    update(field) {
-        return e => this.setState({
-            [field]: e.currentTarget.value
-        });
-    }
+    this.checkout = this.checkout.bind(this);
+    this.cartItems = this.cartItems.bind(this);
+  }
 
-    async checkout() {
-        const { checkout, cart } = this.props;
-        const { firstName, lastName, email } = this.state;
-        if (cart.products.length >= 1) {
-            const user = { firstName, lastName, email };
-            debugger;
-            await checkout(user, cart.id);
-            await this.setState({checkedOut: true})
-        }
-    }
+  update(field) {
+    return ({ currentTarget: { value } }) => this.setState({[field]: value});
+  }
 
-    getTotal() {
-        const { products } = this.props.cart;
-        if (products.length >= 1) {
-            return products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2);
-        }
+  async checkout() {
+    const { cart, retrieveCart } = this.props;
+    const { firstName, lastName, email } = this.state;
+    if (cart.products.length >= 1) {
+      const user = { firstName, lastName, email };
+      await checkout(user, cart.id);
+      await retrieveCart();
+      await this.setState({ checkedOut: true })
     }
+  }
 
-    componentDidMount() {
-        const { retrieveCart, cart } = this.props;
-        if (cart.products.length <= 0) {
-            retrieveCart()
-        }
+  cartItems() {
+    const { cart: { products } } = this.props;
+    return(
+      <div className="product-container cart-container">
+        <Item products={products} type={CART}/>
+      </div>
+    )
+  }
+
+  render() {
+    const { firstName, lastName, email, checkedOut } = this.state;
+    const { cart: { total } } = this.props;
+    if (checkedOut) {
+      return <CheckedOut />
+    } else {
+      return (
+        <div className="cart-parent-container">
+          {this.cartItems()}
+
+          <div className="total-container">
+            <span className="title">Items total: ${total}</span>
+            <form onSubmit={this.checkout}>
+              <div>
+                <input type="text" placeholder="First Name" required name="fname" value={firstName} onChange={this.update("firstName")} />
+                <input type="text" placeholder="Last Name" required name="lname" value={lastName} onChange={this.update("lastName")} />
+              </div>
+
+              <input type="text" placeholder="Email" required name="email" value={email} onChange={this.update("email")} />
+              <input type="submit" value="Place Order" />
+
+            </form>
+          </div>
+        </div>
+      )
     }
-
-    render() {
-        const { cart } = this.props;
-        const { firstName, lastName, email, checkedOut } = this.state;
-        if (checkedOut) {
-            return (
-                <div className="checkout-container">
-                    <h1 className="checkout-message">You're all set! Your order is on the way :). Thanks for choosing Brrr Guys!</h1>
-                    <iframe src="https://giphy.com/embed/4QFAH0qZ0LQnIwVYKT" width="480" height="345" frameBorder="0" className="giphy" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/cbc-schitts-creek-4QFAH0qZ0LQnIwVYKT"></a></p>
-                </div>
-            )
-        } else {
-            return (
-                <div className="cart-parent-container">
-                    <div className="product-container cart-container">
-                        {cart.products.map(product => {
-                            return <Product key={product.id}
-                                title={product.title}
-                                imgUrl={product.photoUrl}
-                                price={product.price}
-                                isCart={true}
-                                productId={product.id}
-                                size={product.size}
-                                quantity={product.quantity}
-                            />
-                        })}
-                    </div>
-
-                    <div className="total-container">
-                        <span className="title">Items total: ${this.getTotal()}</span>
-                        <form onSubmit={this.checkout}>
-                            <div>
-                                <input type="text" placeholder="First Name" required name="fname" value={firstName} onChange={this.update("firstName")} />
-                                <input type="text" placeholder="Last Name" required name="lname" value={lastName} onChange={this.update("lastName")} />
-                            </div>
-                            <input type="text" placeholder="Email" required name="email" value={email} onChange={this.update("email")} />
-                            <input type="submit" value="Place Order" />
-                        </form>
-                    </div>
-                </div>
-            )
-        }
-    }
+  }
 }
 
 const mapStateToProps = ({ cart }) => {
-    return {
-        cart
-    };
+  return {
+    cart
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        retrieveCart: () => dispatch(retrieveCart()),
-        checkout: (user, cartId) => dispatch(checkout(user, cartId))
-    };
+  return {
+    retrieveCart: () => dispatch(retrieveCart())
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Cart);

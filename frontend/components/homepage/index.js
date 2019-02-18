@@ -1,54 +1,22 @@
-import React, { Component } from 'react';
-import { retrieveProducts, retrieveCart } from '../../actions'
-import Product from '../product/product_item';
+import React from 'react';
 import { connect } from 'react-redux';
+import { HOME } from '../../shared/constants'
+import Item from '../item';
 
-class HomePage extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  async componentDidMount() {
-    const { products, retrieveProducts, cart, retrieveCart } = this.props;
-    if (products.length <= 9) {
-      await retrieveProducts()
-    }
-
-    if (cart.id === undefined) {
-      await retrieveCart();
-    }
-  }
-
-  render() {
-    const { products } = this.props;
-    return(
-      <div className="parent-container">
-        <div className="product-container"> 
-          {products.map(product => {
-            return <Product key={product.id} title={product.title} imgUrl={product.photoUrl} price={product.price} productId={product.id} isCart={false}/>
-          })}
-        </div>
-      </div>
-    );
-  }
+const HomePage = ({products}) => {
+  return(
+    <div className="parent-container">
+      <Item products={products} type={HOME} />
+    </div>
+  );
 }
 
-const mapStateToProps = ({products, cart}) => {
+const mapStateToProps = ({products}) => {
   return {
-    products,
-    cart
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    retrieveProducts: () => dispatch(retrieveProducts()),
-    retrieveCart: () => dispatch(retrieveCart())
+    products
   };
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(HomePage);

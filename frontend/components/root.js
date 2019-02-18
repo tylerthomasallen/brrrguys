@@ -1,16 +1,33 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
+import { loadApp } from '../actions';
 import Router from './router';
 
-const Root = ({store}) => {
-    return (
-        <Provider store={store}>
-            <HashRouter>
-                <Router />
-            </HashRouter>
-        </Provider>
+class Root extends Component {
+  
+  async componentDidMount() {
+    await this.props.loadApp()
+  }
+
+  render() {
+    return(
+      <Provider store={this.props.store}>
+        <HashRouter>
+          <Router  />
+        </HashRouter>
+      </Provider>
     );
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadApp: () => dispatch(loadApp())
+  };
 };
 
-export default Root;
+export default connect(
+  null,
+  mapDispatchToProps
+)(Root);

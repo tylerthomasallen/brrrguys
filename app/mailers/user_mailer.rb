@@ -4,6 +4,7 @@ class UserMailer < ApplicationMailer
         @user = user
         @cart = cart
         @products = @cart.products
+        
         mail(to: @user[:email], subject: 'Your Brr Guys Order Confirmation')
     end
 end

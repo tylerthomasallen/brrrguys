@@ -3,33 +3,25 @@ class Api::CartsController < ApplicationController
 
     def index
         @cart = Cart.first
-        if (@cart.products.length >= 1)
-            @products = @cart.products
-            render "api/products/update"
+        @products = @cart.products
+        if @products.empty?
+            render "api/carts/index"
         else
-            render "api/carts/index"
+            render "api/products/update"
         end
     end
 
-    def update
-        @cart = Cart.find(params[:id])
-        @user = user_params
-        products = @cart.products
-        cart_id = @cart.id
-        if @cart
-            UserMailer.checkout_mail(@user, @cart).deliver_now
-            products.each do |product|
-                product.update(cart_id: nil)
-                @cart.products.delete(product)
-            end
+    def checkout
+        cart_checkout = CartServices::Checkout.new(Cart.find(params[:id]), user_params, true)
 
-            
-            render "api/carts/index"
-        else 
-            render json: @cart.errors.full_messages, status: 404
+        if cart_checkout.execute
+            render json: {}, status: :ok
+        else
+            render json: cart_checkout.errors, status: 404
         end
     end
 
+    private
      def user_params
         params.require(:user).permit(:firstName, :lastName, :email)
     end
