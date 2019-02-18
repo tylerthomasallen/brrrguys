@@ -8,12 +8,12 @@ module CartServices
 
         def execute
             return false if @cart.nil?
-            @cart.products.delete_all
-
+            
             if @trigger_email
                 UserMailer.checkout_mail(@update_params, @cart).deliver_now
             end
 
+            @cart.products.delete_all
             true
         end
 

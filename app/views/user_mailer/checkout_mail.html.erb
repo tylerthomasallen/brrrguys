@@ -4,15 +4,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><%="Hi Tyler, thank you for your order!"%></h1>
+    <h1><%="Hi #{@user[:firstName]}, thank you for your order!"%></h1>
 
     <h4>You have successfully ordered:</h4>
     <div>
-      <%=%>
+      <% @products.each do |product| %>
+      <p><%= "#{product[:title]} x #{product[:quantity]}"%></p>
+      <% end %>
     </div>
-    <p>
-      You have successfully ordered this beer!
-    </p>
     <p>Thanks for shopping with Brrr Guys and have a great day!</p>
   </body>
 </html>
