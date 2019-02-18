@@ -90,15 +90,18 @@
 /*!***********************************!*\
   !*** ./frontend/actions/index.js ***!
   \***********************************/
-/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, receiveProducts, receiveCart, retrieveProducts, retrieveCart, loadApp */
+/*! exports provided: RECEIVE_PRODUCTS, RECEIVE_CART, RECEIVE_LOADING, receiveProducts, receiveCart, receiveLoading, isLoading, retrieveProducts, retrieveCart, loadApp */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_PRODUCTS", function() { return RECEIVE_PRODUCTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_CART", function() { return RECEIVE_CART; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_LOADING", function() { return RECEIVE_LOADING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveProducts", function() { return receiveProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCart", function() { return receiveCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveLoading", function() { return receiveLoading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isLoading", function() { return isLoading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveProducts", function() { return retrieveProducts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "retrieveCart", function() { return retrieveCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadApp", function() { return loadApp; });
@@ -110,6 +113,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 var RECEIVE_CART = 'RECEIVE_CART';
+var RECEIVE_LOADING = 'RECEIVE_LOADING';
 var receiveProducts = function receiveProducts(payload) {
   return {
     type: RECEIVE_PRODUCTS,
@@ -122,26 +126,26 @@ var receiveCart = function receiveCart(payload) {
     payload: payload
   };
 };
-var retrieveProducts = function retrieveProducts() {
+var receiveLoading = function receiveLoading(payload) {
+  return {
+    type: RECEIVE_LOADING,
+    payload: payload
+  };
+};
+var isLoading = function isLoading(bool) {
   return (
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(dispatch) {
-        var products;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getProducts"])();
+                return _context.abrupt("return", dispatch(receiveLoading(bool)));
 
-              case 2:
-                products = _context.sent;
-                return _context.abrupt("return", dispatch(receiveProducts(products)));
-
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -155,24 +159,24 @@ var retrieveProducts = function retrieveProducts() {
     }()
   );
 };
-var retrieveCart = function retrieveCart() {
+var retrieveProducts = function retrieveProducts() {
   return (
     /*#__PURE__*/
     function () {
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(dispatch) {
-        var cart;
+        var products;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getCart"])();
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getProducts"])();
 
               case 2:
-                cart = _context2.sent;
-                return _context2.abrupt("return", dispatch(receiveCart(cart)));
+                products = _context2.sent;
+                return _context2.abrupt("return", dispatch(receiveProducts(products)));
 
               case 4:
               case "end":
@@ -188,23 +192,24 @@ var retrieveCart = function retrieveCart() {
     }()
   );
 };
-var loadApp = function loadApp() {
+var retrieveCart = function retrieveCart() {
   return (
     /*#__PURE__*/
     function () {
       var _ref3 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(dispatch) {
+        var cart;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return dispatch(retrieveProducts());
+                return Object(_api__WEBPACK_IMPORTED_MODULE_0__["getCart"])();
 
               case 2:
-                _context3.next = 4;
-                return dispatch(retrieveCart());
+                cart = _context3.sent;
+                return _context3.abrupt("return", dispatch(receiveCart(cart)));
 
               case 4:
               case "end":
@@ -216,6 +221,38 @@ var loadApp = function loadApp() {
 
       return function (_x3) {
         return _ref3.apply(this, arguments);
+      };
+    }()
+  );
+};
+var loadApp = function loadApp() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return dispatch(retrieveProducts());
+
+              case 2:
+                _context4.next = 4;
+                return dispatch(retrieveCart());
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      return function (_x4) {
+        return _ref4.apply(this, arguments);
       };
     }()
   );
@@ -570,17 +607,17 @@ function (_Component) {
       var _checkout2 = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var _this$props, cart, retrieveCart, _this$state, firstName, lastName, email, user;
+        var _this$props, cart, retrieveCart, isLoading, _this$state, firstName, lastName, email, user;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this$props = this.props, cart = _this$props.cart, retrieveCart = _this$props.retrieveCart;
+                _this$props = this.props, cart = _this$props.cart, retrieveCart = _this$props.retrieveCart, isLoading = _this$props.isLoading;
                 _this$state = this.state, firstName = _this$state.firstName, lastName = _this$state.lastName, email = _this$state.email;
 
                 if (!(cart.products.length >= 1)) {
-                  _context.next = 10;
+                  _context.next = 14;
                   break;
                 }
 
@@ -590,11 +627,11 @@ function (_Component) {
                   email: email
                 };
                 _context.next = 6;
-                return Object(_api__WEBPACK_IMPORTED_MODULE_4__["checkout"])(user, cart.id);
+                return isLoading(true);
 
               case 6:
                 _context.next = 8;
-                return retrieveCart();
+                return Object(_api__WEBPACK_IMPORTED_MODULE_4__["checkout"])(user, cart.id);
 
               case 8:
                 _context.next = 10;
@@ -603,6 +640,14 @@ function (_Component) {
                 });
 
               case 10:
+                _context.next = 12;
+                return retrieveCart();
+
+              case 12:
+                _context.next = 14;
+                return isLoading(false);
+
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -691,6 +736,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     retrieveCart: function retrieveCart() {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["retrieveCart"])());
+    },
+    isLoading: function isLoading(bool) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["isLoading"])(bool));
     }
   };
 };
@@ -949,6 +997,46 @@ var Item = function Item(_ref) {
 
 /***/ }),
 
+/***/ "./frontend/components/loading/index.js":
+/*!**********************************************!*\
+  !*** ./frontend/components/loading/index.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+var Loading = function Loading(_ref) {
+  var loading = _ref.loading;
+
+  if (loading) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "loading"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "lds-spinner"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)));
+  } else {
+    return null;
+  }
+};
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var loading = _ref2.loading;
+  return {
+    loading: loading
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Loading));
+
+/***/ }),
+
 /***/ "./frontend/components/navbar/index.js":
 /*!*********************************************!*\
   !*** ./frontend/components/navbar/index.js ***!
@@ -1055,14 +1143,25 @@ function (_Component) {
       var _componentDidMount = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
+        var _this$props, isLoading, loadApp;
+
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return this.props.loadApp();
+                _this$props = this.props, isLoading = _this$props.isLoading, loadApp = _this$props.loadApp;
+                _context.next = 3;
+                return isLoading(true);
 
-              case 2:
+              case 3:
+                _context.next = 5;
+                return loadApp();
+
+              case 5:
+                _context.next = 7;
+                return isLoading(false);
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -1092,6 +1191,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     loadApp: function loadApp() {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["loadApp"])());
+    },
+    isLoading: function isLoading(bool) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_3__["isLoading"])(bool));
     }
   };
 };
@@ -1114,8 +1216,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./homepage */ "./frontend/components/homepage/index.js");
 /* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbar */ "./frontend/components/navbar/index.js");
-/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cart */ "./frontend/components/cart/index.js");
-/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./show */ "./frontend/components/show/index.js");
+/* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loading */ "./frontend/components/loading/index.js");
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cart */ "./frontend/components/cart/index.js");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./show */ "./frontend/components/show/index.js");
+
 
 
 
@@ -1126,14 +1230,14 @@ __webpack_require__.r(__webpack_exports__);
 var Router = function Router() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "app-body"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_loading__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/cart",
-    component: _cart__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _cart__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/beer/:productId",
-    component: _show__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _show__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
@@ -1471,13 +1575,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./products */ "./frontend/reducers/products/index.js");
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cart */ "./frontend/reducers/cart/index.js");
+/* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loading */ "./frontend/reducers/loading/index.js");
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   products: _products__WEBPACK_IMPORTED_MODULE_1__["default"],
-  cart: _cart__WEBPACK_IMPORTED_MODULE_2__["default"]
+  cart: _cart__WEBPACK_IMPORTED_MODULE_2__["default"],
+  loading: _loading__WEBPACK_IMPORTED_MODULE_3__["default"]
 }));
+
+/***/ }),
+
+/***/ "./frontend/reducers/loading/index.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/loading/index.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions */ "./frontend/actions/index.js");
+
+
+var loadingReducer = function loadingReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_LOADING"]:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (loadingReducer);
 
 /***/ }),
 

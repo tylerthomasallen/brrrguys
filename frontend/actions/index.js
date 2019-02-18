@@ -2,6 +2,7 @@ import { getProducts, getCart, removeProduct, getProduct} from '../api';
 
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const RECEIVE_CART = 'RECEIVE_CART';
+export const RECEIVE_LOADING = 'RECEIVE_LOADING';
 
 export const receiveProducts = payload => {
   return {
@@ -16,6 +17,19 @@ export const receiveCart = payload => {
     payload
   };
 };
+
+export const receiveLoading = payload => {
+  return {
+    type: RECEIVE_LOADING,
+    payload
+  }
+}
+
+export const isLoading = (bool) => async dispatch => {
+  return(
+    dispatch(receiveLoading(bool))
+  )
+}
 
 export const retrieveProducts = () => async dispatch => {
   const products = await getProducts()
