@@ -1,48 +1,44 @@
-// Place all the styles related to the Products controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import './constants.scss';
 
 .product-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  flex-wrap: wrap;
 }
 .product-item {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  cursor: pointer;
+  margin: 20px;
+
+  img {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+  }
+
+  span {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .add {
+    background: black;
+    color: white;
     cursor: pointer;
-    margin: 20px;
-
-    img {
-        height: 300px;
-        width: 300px;
-        object-fit: cover;
-    }
-
-    span {
-        margin-top: 20px;
-        font-weight: bold;
-    }
-
-    .add {
-        background: black;
-        color: white;
-        cursor: pointer;
-    }
-
-
+  }
 }
 
 .product-item:hover {
-    box-shadow: 0 1px 3px 0 #bcbdbd, 0 0 0 1px #d4d4d5;
+    box-shadow: $box-shadow;
 }
 
 .title {
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: left;
 }

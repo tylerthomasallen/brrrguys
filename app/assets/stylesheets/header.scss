@@ -1,39 +1,38 @@
-$milk-guys-orange: #f2711c;
+@import "./constants.scss";
 
 .navbar-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 20px;
-    box-shadow: 0 4px 2px -2px lightgray;
-    position: sticky;
-    top: 0;
-    background: white;
-    color: $milk-guys-orange;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 2px -2px lightgray;
+  position: sticky;
+  top: 0;
+  background: white;
+  color: $milk-guys-orange;
 
-    i {
-        font-size: 24px;
-        
-    }
+  i {
+    font-size: 24px;
+  }
 }
 
 .shopping-cart-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
 
-    i {
-        margin-right: 10px;
-    }
+  i {
+    margin-right: 10px;
+  }
 
-    span {
-        font-size: 18px;
-    }
+  span {
+    font-size: 18px;
+  }
 }
 
 .shopping-cart-container:hover {
-    background: lightgray;
+  background: lightgray;
 }
