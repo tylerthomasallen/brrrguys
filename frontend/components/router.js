@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import HomePage from './homepage';
 import NavBar from './navbar';
 import Cart from './cart';
-import ProductShow from './product/show';
+import ProductShow from './show';
 
 const Router = () => {
   return(

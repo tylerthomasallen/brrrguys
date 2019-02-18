@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { SHOW } from '../../shared/constants';
+import Item from '../item';
 
 const ProductShow = ({product, cart_id}) => {
   return(
