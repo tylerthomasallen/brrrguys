@@ -2,8 +2,6 @@ import HomeItem from '../components/homepage/item';
 import CartItem from '../components/cart/item';
 import ShowItem from '../components/show/item';
 
-export const OK = 200
-
 export const SMALL = 'S'
 export const MEDIUM = 'M'
 export const LARGE = 'L'

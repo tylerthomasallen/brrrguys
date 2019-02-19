@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CheckedOut from './checked_out';
 import { retrieveCart, isLoading } from '../../actions';
-import { checkout } from '../../api';
+import { checkoutCart } from '../../api';
 import Item from '../item';
 import { CART } from '../../shared/constants';
 
@@ -25,13 +25,14 @@ class Cart extends Component {
     return ({ currentTarget: { value } }) => this.setState({[field]: value});
   }
 
-  async checkout() {
+  async checkout(e) {
+    e.preventDefault();
     const { cart, retrieveCart, isLoading } = this.props;
     const { firstName, lastName, email } = this.state;
     if (cart.products.length >= 1) {
       const user = { firstName, lastName, email };
-      await isLoading(true);
-      await checkout(user, cart.id);
+      await isLoading(true)
+      await checkoutCart(user, cart.id);
       await this.setState({ checkedOut: true })
       await retrieveCart();
       await isLoading(false);

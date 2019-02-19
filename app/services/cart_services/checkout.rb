@@ -15,6 +15,7 @@ module CartServices
       end
       
       @cart.products.delete_all
+      # binding.pry
       true
     end
 

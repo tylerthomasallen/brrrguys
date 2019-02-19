@@ -1,5 +1,3 @@
-import { OK } from '../shared/constants'
-
 export const getProducts = async () => {
   try {
     let products = await fetch(`/api/products`);
@@ -11,9 +9,11 @@ export const getProducts = async () => {
 }
 
 export const getCart = async () => {
+  debugger;
   try {
     let cart = await fetch(`/api/carts`);
     let cartJSON = await cart.json();
+    debugger;
     return cartJSON.cart;
   } catch(error) {
     console.log(error);
@@ -22,8 +22,7 @@ export const getCart = async () => {
 
 export const addProduct = async (product) => {
   try {
-    const res = await fetch(`/api/products/${product.id}`, postBody({ product }))
-    return res.status === OK
+    await fetch(`/api/products/${product.id}`, postBody({ product }))
   } catch(error) {
     console.log(error);
   }
@@ -37,10 +36,10 @@ export const removeProduct = async (productId) => {
   }
 }
 
-export const checkout = async (user, cartId) => {
+export const checkoutCart = async (user, cartId) => {
+  debugger;
   try {
-    const res = await fetch(`api/carts/${cartId}`, postBody({ user }))
-    return res.status === OK
+    await fetch(`api/carts/${cartId}`, postBody({ user }))
   } catch(error) {
     console.log(error)
   }

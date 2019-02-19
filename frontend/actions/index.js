@@ -39,6 +39,7 @@ export const retrieveProducts = () => async dispatch => {
 };
 
 export const retrieveCart = () => async dispatch => {
+  debugger;
   const cart = await getCart();
   return (
     dispatch(receiveCart(cart))
